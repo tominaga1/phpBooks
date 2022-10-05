@@ -16,9 +16,9 @@
 session_start();
 
 //①名前とパスワードを入れる変数を初期化する
-$name =  $_POST['name'];;//名前の初期化
-$password =  $_POST['password'];;//パスワードの初期化
-$err_msg = array();
+$name =  $_POST['name'];//名前の初期化
+$password =  $_POST['password'];//パスワードの初期化
+$err_msg = "";
 
 /*
  * ②ログインボタンが押されたかを判定する。
@@ -45,7 +45,7 @@ if ( isset($_POST['name'])) {/* ②の処理を書く */
 if (isset($_POST['name'])) {
 	//⑧名前に「yse」、パスワードに「2021」と設定されているか確認する。設定されていた場合はif文の中に入る
 
-	if( $POST['name'] === $yse && $POST['password'] === $2011){/* ⑧の処理を書く */
+	if( $name == 'yse' && $password == '2021'){/* ⑧の処理を書く */
 
 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
 		//⑩在庫一覧画面へ遷移する
