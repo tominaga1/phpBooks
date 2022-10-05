@@ -26,8 +26,10 @@ if (/* ③の処理を書く */){
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
+$pdo = new PDO($dsn, $name, $password);
 
 //⑦データベースで使用する文字コードを「UTF8」にする
+header('Content-Type: text/plain; charset=UTF-8', true, 500);
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(/* ⑧の処理を行う */){
@@ -42,7 +44,10 @@ function getId($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 
+	$sql = 'SELECT, founder FROM books WHERE id = {$id}';
+	$con = $id;
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
+	//return $con 
 }
 
 ?>
@@ -99,17 +104,20 @@ function getId($id,$con){
 					/*
 					 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
 					 */
-    				foreach(/* ⑮の処理を書く */){
-    					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
+    				foreach($_POST['books'] as $book_id){/* ⑮の処理を書く */
+    					
+						// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
+						$book= getId($book_id,$pdo);
+
 					?>
 					<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 					<tr>
-						<td><?php echo	/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
-						<td><?php echo	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
-						<td><?php echo	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
-						<td><?php echo	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
-						<td><?php echo	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
-						<td><?php echo	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
+						<td><?php echo	$book['id']/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
+						<td><?php echo	$book['book_name']/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
+						<td><?php echo	$book['author']/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
+						<td><?php echo	$book['salesDate']/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
+						<td><?php echo	$book['price']/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
+						<td><?php echo  $book['stock']	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
 						<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
 					</tr>
 					<?php

@@ -31,6 +31,7 @@ function updateByid($id,$con,$total){
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 if (/* ⑤の処理を書く */){
 	//⑥SESSIONの「error2」に「ログインしてください」と設定する。
+//	$pdo = new PDO($dsn, $username, $password, $driver_options);
 	//⑦ログイン画面へ遷移する。
 }
 
