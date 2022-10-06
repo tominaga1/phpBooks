@@ -15,20 +15,20 @@ session_start();
 session_regenerate_id();
 
 //②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if ()
+if (isset($_SESSION['login'])===false)
 {
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
-	
+	$_SESSION['error2']="ログインしてください";
 	//④ログイン画面へ遷移する。
-	
+	header('Location:login.php');
 }
 
 
 //⑤データベースへ接続し、接続情報を変数に保存する
-$db_name='zaiko2021_yse';
+$db_name='yse';
 $host='localhost';
-$user_name='zaiko2021_yse';
-$password='2021zaiko';
+$user_name='yse';
+$password='2021';
 $dsn = "mysql:dbname={$db_name};host={$host};cherset=utf8";
 
 //⑥データベースで使用する文字コードを「UTF8」にする
