@@ -9,6 +9,7 @@
 */
 
 //①セッションを開始する
+session_start();
 
 function getByid($id,$con){
 	/* 
@@ -17,6 +18,8 @@ function getByid($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 
+	 $sql = "SELECT * FROM books WHERE id  = {$id}";
+	 $query = $con -> query($sql);
 	//③実行した結果から1レコード取得し、returnで値を返す。
 }
 
@@ -26,6 +29,8 @@ function updateByid($id,$con,$total){
 	 * 引数で受け取った$totalの値で在庫数を上書く。
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
+	$sql = "UPDATE books SET stock = {$total} WHERE id = {$id}";
+	$query=$con->query($sql);
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
@@ -36,13 +41,17 @@ if (/* ⑤の処理を書く */){
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
+$pdo = new PDO($dsn, $name, $password);
 
 //⑨データベースで使用する文字コードを「UTF8」にする
+header('Content-Type: text/plain; charset=UTF-8', true, 500);
 
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
+$book_count = 0;
+
 
 //⑪POSTの「books」から値を取得し、変数に設定する。
-foreach(/* ⑪の処理を書く */){
+foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 	/*
 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
@@ -118,8 +127,8 @@ if(/* ㉓の処理を書く */){
 							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 						?>
 						<tr>
-							<td><?php echo	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
-							<td><?php echo	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
+							<td><?php echo	$book["title"]/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+							<td><?php echo	$book["stock"]/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
 							<td><?php echo	/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 						</tr>
 						<input type="hidden" name="books[]" value="<?php echo /* ㊲ ㉝で取得した値を設定する */; ?>">
