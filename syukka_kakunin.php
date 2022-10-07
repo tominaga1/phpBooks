@@ -9,6 +9,7 @@
 */
 
 //①セッションを開始する
+session_start();
 
 function getByid($id,$con){
 	/* 
@@ -17,7 +18,10 @@ function getByid($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 
+	$sql = "SELECT * FROM books WHERE id  = {$id}";
+	$query = $con -> query($sql);
 	//③実行した結果から1レコード取得し、returnで値を返す。
+
 }
 
 function updateByid($id,$con,$total){
@@ -35,8 +39,10 @@ if (/* ⑤の処理を書く */){
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
+$pdo = new PDO($dsn, $name, $password);
 
 //⑨データベースで使用する文字コードを「UTF8」にする
+header('Content-Type: text/plain; charset=UTF-8', true, 500);
 
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 
@@ -117,8 +123,8 @@ if(/* ㉓の処理を書く */){
 						//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 					?>
 					<tr>
-						<td><?php echo	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
-						<td><?php echo	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
+						<td><?php echo $book["title"]/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+						<td><?php echo $book["stock"]/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
 						<td><?php echo	/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
 					<input type="hidden" name="books[]" value="<?php echo /* ㊳ ㉝で取得した値を設定する */;?>">
