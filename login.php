@@ -45,8 +45,8 @@ if (isset($_POST['name'])) {
 
 	if( $name == 'yse' && $password == '2021'){/* ⑧の処理を書く */
 
-		$SESSION['account_name']=$login_name;//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
-		$SESSION['login']=true;
+		$_SESSION['name']=$name;//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
+		$_SESSION['login'] = true;
 		
 		//⑩在庫一覧画面へ遷移する
 		
@@ -58,11 +58,11 @@ if (isset($_POST['name'])) {
 }
 
 //⑫SESSIONの「error2」に値が入っているか判定する。入っていた場合はif文の中に入る
-if (isset($SESSION['error2']) {/* ⑫の処理を書く */
+if (isset($_SESSION['error2']) {/* ⑫の処理を書く */
 	
-	$err_msg = $SESSION;//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
+	$err_msg = $_SESSION;//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
 	
-	$SESSION['error2'] = null;//⑭SESSIONの「error2」にnullを入れる。
+	$_SESSION['error2'] = null;//⑭SESSIONの「error2」にnullを入れる。
 }
 ?>
 <!DOCTYPE html>
