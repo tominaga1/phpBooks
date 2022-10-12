@@ -30,8 +30,22 @@ if (isset($_SESSION['login'])=== false)
 	header('Location:login.php');
 }
 
+$db_name = "yse";
+$host = "localhost";
+$name = "yse";
+$password = "2021";
+$dsn = "mysql:dbname={$db_name};host={$host}";
+
+try
+{
+	$pdo = new PDO($dsn, $name, $password);
+	
+}catch (PDOException $test) {
+	exit;
+}
+
 //⑥データベースへ接続し、接続情報を変数に保存する
-$pdo = new PDO($dsn, $user_name, $password);
+$pdo = new PDO($dsn, $name, $password);
 
 
 //⑦データベースで使用する文字コードを「UTF8」にする

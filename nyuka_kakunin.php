@@ -34,13 +34,29 @@ function updateByid($id,$con,$total){
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (/* ⑤の処理を書く */){
+if (isset($_SESSION['login']) === false){/* ⑤の処理を書く */
 	//⑥SESSIONの「error2」に「ログインしてください」と設定する。
+	$_SESSION['error2'] = "ログインしてください";
+
 //	$pdo = new PDO($dsn, $username, $password, $driver_options);
 	//⑦ログイン画面へ遷移する。
+	header('Location:login.php');
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
+$db_name = "yse";
+$host = "localhost";
+$name = "yse";
+$password = "2021";
+$dsn = "mysql:dbname={$db_name};host={$host}";
+
+try
+{
+	$pdo = new PDO($dsn, $name, $password);
+	
+}catch (PDOException $test) {
+	exit;
+}
 $pdo = new PDO($dsn, $name, $password);
 
 //⑨データベースで使用する文字コードを「UTF8」にする
@@ -59,37 +75,58 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 	 */
 	if (/* ⑫の処理を書く */) {
 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+		$_SESSION['error']= "数値以外が入力されています";
+
 		//⑭「include」を使用して「nyuka.php」を呼び出す。
+		include('nyuka.php');
+
 		//⑮「exit」関数で処理を終了する。
+		exit;
 	}
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
-
+	$book=getByid($book_id,$pdo);
+	
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
+	$book_goukei = $book["stock"] + $_POST['stock'][$stock];
 
 	//⑱ ⑰の値が100を超えているか判定する。超えていた場合はif文の中に入る。
-	if(/* ⑱の処理を行う */){
+	if($book_goukei >= 100){/* ⑱の処理を行う */
 		//⑲SESSIONの「error」に「最大在庫数を超える数は入力できません」と設定する。
+		$_SESSION['error']= "最大在庫数を超える数は入力できません";
+
 		//⑳「include」を使用して「nyuka.php」を呼び出す。
+		include('nyuka.php');
 		//㉑「exit」関数で処理を終了する。
+		exit;
+
 	}
 	
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
+	$stock++;
 }
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-if(/* ㉓の処理を書く */){
+if((isset($_POST['add'])){/* ㉓の処理を書く */
 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
+	$book_count=0;
 
 	//㉕POSTの「books」から値を取得し、変数に設定する。
-	foreach(/* ㉕の処理を書く */){
+	foreach($_POST['books'] as $book_id){/* ㉕の処理を書く */
 		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
+		$book=getByid($book_id,$pdo);
+
 		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
+		$book_goukei=$book['stock'] + $_POST['stock'][$book_count];
+
 		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
+		$book=updateByid($book_id,$pdo,$book_goukei);
+
 		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
+		$book_count++;
 	}
 
 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
@@ -135,10 +172,11 @@ if(/* ㉓の処理を書く */){
 							<td><?php echo	$book["stock"]/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
 							<td><?php echo	$_POST['stock']/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 						</tr>
-						<input type="hidden" name="books[]" value="<?php echo /* ㊲ ㉝で取得した値を設定する */; ?>">
-						<input type="hidden" name="stock[]" value='<?php echo /* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
+						<input type="hidden" name="books[]" value="<?php echo $book_id/* ㊲ ㉝で取得した値を設定する */; ?>">
+						<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$book_count]/* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 						<?php
 							//㊴ ㉜で宣言した変数をインクリメントで値を1増やす。
+							$book_count++;
 						}
 						?>
 					</tbody>
