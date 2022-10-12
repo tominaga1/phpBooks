@@ -15,7 +15,7 @@ session_start();
 session_regenerate_id();
 
 //②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (isset($_SESSION['login'])===false)
+if (($_SESSION['login'])!= true)
 {
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2']="ログインしてください";
@@ -23,27 +23,23 @@ if (isset($_SESSION['login'])===false)
 	header('Location:login.php');
 }
 
+$con $mysqli = new mysqli('localhost', 'yse', '2021', 'yse');
+
 
 //⑤データベースへ接続し、接続情報を変数に保存する
-$db_name='yse';
-$host='localhost';
-$user_name='yse';
-$password='2021';
+
 $dsn = "mysql:dbname={$db_name};host={$host};cherset=utf8";
 
 //⑥データベースで使用する文字コードを「UTF8」にする
-try 
-{
-$pdo = new PDO($dsn, $user_name, $password);
-} 
-catch (PDOException $e) 
-{
-exit;
-}
+$dsn = "mysql:host=" . $host . ";dbname=" . $dbname . ";charser=utf8";
+
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
-$sql="SELECT * FROM books WHERE deleteflg=0";
-$row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+$sql = "SELECT * FROM books";
+$bookdate = $mysqli->query($sql);
+
+//$phpsbooks="SELECT * FROM books WHERE deleteflg=0";
+//$row = $pdo->query($phpsbooks)->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
