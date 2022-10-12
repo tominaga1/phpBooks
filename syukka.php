@@ -21,9 +21,12 @@ if (session_status() == PHP_SESSION_NONE)
 }
 
 //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (/* ③の処理を書く */){
+if (isset($_SESSION['login'])===false)
+{
 	//④SESSIONの「error2」に「ログインしてください」と設定する。
+	$_SESSION['error2'] = "ログインしてください";
 	//⑤ログイン画面へ遷移する。
+	header('Location:login.php');
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
@@ -47,9 +50,13 @@ catch(PDDException $e)
 header('Content-Type: text/plain; charset=UTF-8', true, 500);
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-if(/* ⑧の処理を行う */){
+if(!isset($_POST['books']))
+{
 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
+	$_SESSION['success']= "出荷する商品が選択されていません";
 	//⑩在庫一覧画面へ遷移する。
+	header('Location:zaiko_ichiran.php');
+	exit;
 }
 
 function getId($id,$con)
@@ -59,10 +66,10 @@ function getId($id,$con)
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-	if(isset($_SESSION['error'])
+	$sql= "SELECT * FROM books WHERE id = {$id}";
+	$query=$con->query($sql);
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
-	$error = $_SESSION['error'];
-	echo $error;
+	return $query->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 <!DOCTYPE html>
@@ -96,8 +103,11 @@ function getId($id,$con)
 		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
 		 * 設定されていた場合はif文の中に入る。
 		 */ 
-		if(/* ⑬の処理を書く */){
+		if(isset($_SESSION['error'])
+		{
 			//⑭SESSIONの「error」の中身を表示する。
+			$error = $_SESSION['error'];
+			echo $error;
 		}
 		?>
 		</div>
@@ -121,8 +131,9 @@ function getId($id,$con)
 				foreach($_POST['books'] as $book_id)
 					{
 					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
+					$book=getId($book_id,$pdo);
 				?>
-				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
+				<input type="hidden" value="<?php echo	$book['id']/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 				<tr>
 					<td><?php echo $book['id'];	/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
 					<td><?php echo $book['title'];/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
