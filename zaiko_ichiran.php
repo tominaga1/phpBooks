@@ -66,10 +66,11 @@ $row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
 				 */ 
-				if()
+				if(isset($_SESSION['success']))
 					{
 					//⑨SESSIONの「success」の中身を表示する。
-					
+					$success = $_SESSION['success'];
+			 		echo $success;
 					}
 				?>
 			</div>
