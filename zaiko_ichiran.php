@@ -70,7 +70,7 @@ $row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 					{
 					//⑨SESSIONの「success」の中身を表示する。
 					$success = $_SESSION['success'];
-			 		echo $success;
+					echo $success;
 					}
 				?>
 			</div>
@@ -111,7 +111,7 @@ $row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							extract($row);
 							echo "<tr id='book'>";
-							echo "<td id='check'><input type='checkbox' name='books[]'value=".."></td>";//12
+							echo "<td id='check'><input type='checkbox' name='books[]'value=".$id."></td>";//12
 							echo "<td id='id'>$id</td>";//13
 							echo "<td id='title'>$title</td>";//14
 							echo "<td id='author'>$author</td>";//15
