@@ -27,7 +27,7 @@ if (($_SESSION['login'])!=false)
 	$_SESSION['error2'] = "ログインしてください";
 	//⑤ログイン画面へ遷移する。
 	header('Location:login.php');
-	exit;
+	exit();
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
@@ -44,7 +44,7 @@ if(!isset($_POST['books']))
 	$_SESSION['success']= "出荷する商品が選択されていません";
 	//⑩在庫一覧画面へ遷移する。
 	header('Location:zaiko_ichiran.php');
-	exit;
+	exit();
 }
 
 function getId($id,$con)

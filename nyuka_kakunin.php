@@ -34,7 +34,7 @@ function updateByid($id,$con,$total){
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (isset($_SESSION['login']) === false){/* ⑤の処理を書く */
+if (($_SESSION['login'])!= true){/* ⑤の処理を書く */
 	//⑥SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = "ログインしてください";
 
@@ -44,23 +44,21 @@ if (isset($_SESSION['login']) === false){/* ⑤の処理を書く */
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
-$db_name = "yse";
-$host = "localhost";
-$name = "yse";
-$password = "2021";
-$dsn = "mysql:dbname={$db_name};host={$host}";
+$con  = new mysqli('localhost', 'yse', '2021', 'yse');
+
+
 
 try
 {
 	$pdo = new PDO($dsn, $name, $password);
 	
 }catch (PDOException $test) {
-	exit;
+	exit();
 }
 $pdo = new PDO($dsn, $name, $password);
 
 //⑨データベースで使用する文字コードを「UTF8」にする
-header('Content-Type: text/plain; charset=UTF-8', true, 500);
+$mysqli->set_charset("utf-8");
 
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 $book_count = 0;
@@ -81,7 +79,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 		include('nyuka.php');
 
 		//⑮「exit」関数で処理を終了する。
-		exit;
+		exit();
 	}
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
@@ -98,7 +96,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 		//⑳「include」を使用して「nyuka.php」を呼び出す。
 		include('nyuka.php');
 		//㉑「exit」関数で処理を終了する。
-		exit;
+		exit();
 
 	}
 	
@@ -110,7 +108,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-if((isset($_POST['add'])){/* ㉓の処理を書く */
+if((isset($_POST['add']) == 'ok'){/* ㉓の処理を書く */
 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
 	$book_count=0;
 

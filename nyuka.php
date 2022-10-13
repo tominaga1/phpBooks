@@ -31,26 +31,12 @@ if (($_SESSION['login'])!= true)
 	exit();
 }
 
-$db_name = "yse";
-$host = "localhost";
-$name = "yse";
-$password = "2021";
-$dsn = "mysql:dbname={$db_name};host={$host}";
-
-try
-{
-	$pdo = new PDO($dsn, $name, $password);
-	
-}catch (PDOException $test) {
-	exit();
-}
-
 //⑥データベースへ接続し、接続情報を変数に保存する
-$pdo = new PDO($dsn, $name, $password);
+$con  = new mysqli('localhost', 'yse', '2021', 'yse');
 
 
 //⑦データベースで使用する文字コードを「UTF8」にする
-header('Content-Type: text/plain; charset=UTF-8', true, 500);
+$mysqli->set_charset("utf-8");
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(!isset($_POST['books']))
