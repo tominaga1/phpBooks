@@ -25,7 +25,7 @@ if (($_SESSION['login'])!= true)
 }
 
 //⑤データベースへ接続し、接続情報を変数に保存する
-$mysqli  = mysqli_connect('localhost', 'phpBooks', 'zaiko', 'phpbooks');
+$mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
 //$mysqli = mysqli_connect($local_host , $username , $passwd , $dbname)
 
 //⑥データベースで使用する文字コードを「UTF8」にする
@@ -33,7 +33,7 @@ $mysqli_set_charset($mysqli ,"utf-8");
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
-$bookdate = $mysqli->query($sql);
+$bookdata = $mysqli->query($sql);
 
 //$phpsbooks="SELECT * FROM books WHERE deleteflg=0";
 //$row = $pdo->query($phpsbooks)->fetch(PDO::FETCH_ASSOC);
@@ -100,6 +100,7 @@ $bookdate = $mysqli->query($sql);
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
 						while($row = $query->fetch(PDO::FETCH_ASSOC))
+						
 						{
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							extract($row);
