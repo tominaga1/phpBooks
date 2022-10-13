@@ -22,12 +22,13 @@ if (session_status() == PHP_SESSION_NONE)
 
 
 //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (isset($_SESSION['login'])=== false)
+if (($_SESSION['login'])!= true)
 {
 	//④SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2']="ログインしてください";
 	//⑤ログイン画面へ遷移する。
 	header('Location:login.php');
+	exit();
 }
 
 $db_name = "yse";
@@ -41,7 +42,7 @@ try
 	$pdo = new PDO($dsn, $name, $password);
 	
 }catch (PDOException $test) {
-	exit;
+	exit();
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
@@ -58,7 +59,7 @@ if(!isset($_POST['books']))
 	$_SESSION['success']= "入荷する商品が選択されていません";
 	//⑩在庫一覧画面へ遷移する。
 	header('Location:zaiko_ichiran.php');
-	exit;
+	exit();
 }
 
 function getId($id,$con)
@@ -141,7 +142,7 @@ function getId($id,$con)
 					<input type="hidden" value="<?php echo	$book['id']/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 					<tr>
 						<td><?php echo	$book['id']/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
-						<td><?php echo	$book['book_name']/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
+						<td><?php echo	$book['title']/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
 						<td><?php echo	$book['author']/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
 						<td><?php echo	$book['salesDate']/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
 						<td><?php echo	$book['price']/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
