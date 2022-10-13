@@ -21,33 +21,21 @@ if (session_status() == PHP_SESSION_NONE)
 }
 
 //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (isset($_SESSION['login'])===false)
+if (($_SESSION['login'])!=false)
 {
 	//④SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = "ログインしてください";
 	//⑤ログイン画面へ遷移する。
 	header('Location:login.php');
+	exit;
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
-$db_name = "yse";
-$host = "localhost";
-$user_name = "yse";
-$password = "2021";
-$dsn = "mysql:dbname={$db_name};host={$host}";
+$con  = new mysqli('localhost', 'yse', '2021', 'yse');
 
-try
-{
-	$pdo = new PDO($dsn, $user_name, $password);
-	// echo "接続成功1".PHP_EOL;
-}
-catch(PDDException $e)
-{
-	// echo "接続失敗:".$e->getMessage().PHP_EOL;
-	exit;
-}
 //⑦データベースで使用する文字コードを「UTF8」にする
-header('Content-Type: text/plain; charset=UTF-8', true, 500);
+//header('Content-Type: text/plain; charset=UTF-8', true, 500);
+$mysqli->set_charset("utf-8");
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(!isset($_POST['books']))

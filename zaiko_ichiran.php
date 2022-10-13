@@ -21,18 +21,14 @@ if (($_SESSION['login'])!= true)
 	$_SESSION['error2']="ログインしてください";
 	//④ログイン画面へ遷移する。
 	header('Location:login.php');
+	exit();
 }
 
-$con $mysqli = new mysqli('localhost', 'yse', '2021', 'yse');
-
-
 //⑤データベースへ接続し、接続情報を変数に保存する
-
-$dsn = "mysql:dbname={$db_name};host={$host};cherset=utf8";
+$con  = new mysqli('localhost', 'yse', '2021', 'yse');
 
 //⑥データベースで使用する文字コードを「UTF8」にする
-$dsn = "mysql:host=" . $host . ";dbname=" . $dbname . ";charser=utf8";
-
+$mysqli->set_charset("utf-8");
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
