@@ -25,11 +25,11 @@ if (($_SESSION['login'])!= true)
 }
 
 //⑤データベースへ接続し、接続情報を変数に保存する
-//$con  = new mysqli('localhost', 'yse', '2021', 'yse');
-$mysqli = mysqli_connect($local_host,$username,$passwd,$dbname)
+$mysqli  = mysqli_connect('localhost', 'phpBooks', 'zaiko', 'phpbooks');
+//$mysqli = mysqli_connect($local_host , $username , $passwd , $dbname)
 
 //⑥データベースで使用する文字コードを「UTF8」にする
-$mysqli->set_charset("utf8");
+$mysqli_set_charset($mysqli ,"utf-8");
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
