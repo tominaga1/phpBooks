@@ -29,7 +29,7 @@ $mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
 //$mysqli = mysqli_connect($local_host , $username , $passwd , $dbname)
 
 //⑥データベースで使用する文字コードを「UTF8」にする
-$mysqli_set_charset($mysqli ,"utf-8");
+mysqli_set_charset($mysqli ,"utf8");
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
@@ -99,8 +99,7 @@ $bookdata = $mysqli->query($sql);
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						while($row = $query->fetch(PDO::FETCH_ASSOC))
-						
+						while(mysqli_fetch_array($bookdata))
 						{
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							extract($row);
