@@ -160,10 +160,12 @@ if((isset($_POST['add']) == 'ok'){/* ㉓の処理を書く */
 					<tbody>
 						<?php
 						//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
+						$book_count = 0;
 
 						//㉝POSTの「books」から値を取得し、変数に設定する。
-						foreach(/* ㉝の処理を書く */){
+						foreach($_POST["books"] as $book_id){/* ㉝の処理を書く */
 							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
+							$book=getByid($book_id,$pdo);
 						?>
 						<tr>
 							<td><?php echo	$book["title"]/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
