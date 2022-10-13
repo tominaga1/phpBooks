@@ -73,7 +73,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
 	 */
-	if (/* ⑫の処理を書く */) {
+	if (!is_numeric($_POST['stock'][$book_count])) {/* ⑫の処理を書く */
 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
 		$_SESSION['error']= "数値以外が入力されています";
 
@@ -88,7 +88,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 	$book=getByid($book_id,$pdo);
 	
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
-	$book_goukei = $book["stock"] + $_POST['stock'][$stock];
+	$book_goukei = $book["stock"] + $_POST['stock'][$book_count];
 
 	//⑱ ⑰の値が100を超えているか判定する。超えていた場合はif文の中に入る。
 	if($book_goukei >= 100){/* ⑱の処理を行う */
@@ -103,7 +103,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 	}
 	
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
-	$stock++;
+	$book_count++;
 }
 
 /*

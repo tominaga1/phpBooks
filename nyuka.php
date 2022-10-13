@@ -138,7 +138,7 @@ function getId($id,$con)
 						$book= getId($book_id,$pdo);
 
 					?>
-					<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
+					<input type="hidden" value="<?php echo	$book['id']/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 					<tr>
 						<td><?php echo	$book['id']/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
 						<td><?php echo	$book['book_name']/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
