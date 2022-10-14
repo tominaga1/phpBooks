@@ -44,7 +44,7 @@ if (isset($_POST['decision']) && $_POST['decision'] == '1') {/* ②の処理を�
 if (isset($_POST['name'])) {
 	//⑧名前に「yse」、パスワードに「2021」と設定されているか確認する。設定されていた場合はif文の中に入る
 
-	if( $name == 'yse' && $password == '2021'){/* ⑧の処理を書く */
+	if( $name == 'phpBooks' && $password == 'zaiko'){/* ⑧の処理を書く */
 
 		$_SESSION['name']=$name;//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
 		$_SESSION['login'] = true;

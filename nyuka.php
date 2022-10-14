@@ -32,11 +32,11 @@ if (($_SESSION['login'])!= true)
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
-$con  = new mysqli('localhost', 'yse', '2021', 'yse');
+$mysqli  = mysqli_connect('localhost', 'phpBooks', 'zaiko', 'phpbooks');
 
 
 //⑦データベースで使用する文字コードを「UTF8」にする
-$mysqli->set_charset("utf-8");
+mysqli_set_charset($mysqli ,"utf8");
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(!isset($_POST['books']))
