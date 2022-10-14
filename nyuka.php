@@ -32,7 +32,12 @@ if (($_SESSION['login'])!= true)
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
+<<<<<<< HEAD
 $mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
+=======
+$mysqli  = mysqli_connect('localhost', 'phpBooks', 'zaiko', 'phpbooks');
+
+>>>>>>> a463b36c0d92d401dfab9edbfca702e9e740058a
 
 //⑦データベースで使用する文字コードを「UTF8」にする
 mysqli_set_charset($mysqli ,"utf8");

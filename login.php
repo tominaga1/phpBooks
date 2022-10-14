@@ -45,8 +45,14 @@ if (isset($_POST['decision']) && $_POST['decision'] == '1')
 if (isset($_POST['name'])) 
 {
 	//⑧名前に「yse」、パスワードに「2021」と設定されているか確認する。設定されていた場合はif文の中に入る
+<<<<<<< HEAD
 	if( $name == 'phpbooks' && $password == 'zaiko')
 	{
+=======
+
+	if( $name == 'phpBooks' && $password == 'zaiko'){/* ⑧の処理を書く */
+
+>>>>>>> a463b36c0d92d401dfab9edbfca702e9e740058a
 		$_SESSION['name']=$name;//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
 		$_SESSION['login'] = true;
 		//⑩在庫一覧画面へ遷移する

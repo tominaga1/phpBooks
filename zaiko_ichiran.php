@@ -25,8 +25,13 @@ if (($_SESSION['login'])!= true)
 }
 
 //⑤データベースへ接続し、接続情報を変数に保存する
+<<<<<<< HEAD
 $mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
 
+=======
+$mysqli  = mysqli_connect('localhost', 'phpBooks', 'zaiko', 'phpbooks');
+//$mysqli = mysqli_connect($local_host , $username , $passwd , $dbname)
+>>>>>>> a463b36c0d92d401dfab9edbfca702e9e740058a
 
 //⑥データベースで使用する文字コードを「UTF8」にする
 mysqli_set_charset($mysqli ,"utf8");
@@ -100,6 +105,10 @@ $bookdata = $mysqli->query($sql);
 						{
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							extract(mysqli_fetch_array($bookdata));
+<<<<<<< HEAD
+=======
+
+>>>>>>> a463b36c0d92d401dfab9edbfca702e9e740058a
 							echo "<tr id='book'>";
 							echo "<td id='check'><input type='checkbox' name='books[]'value=".$id."></td>";//12
 							echo "<td id='id'>$id</td>";//13
