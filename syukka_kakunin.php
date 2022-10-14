@@ -42,24 +42,14 @@ if (isset($_SESSION['login']) === false)
 	$_SESSION['error2']="ログインしてください";
 	//⑦ログイン画面へ遷移する。
 	header('Location:login.php');
+	exit;
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
-$db_name = "yse";
-$host = "localhost";
-$user_name = "yse";
-$password = "2021";
-$dsn = "mysql:dbname={$db_name};host={$host}";
-try 
-{
-	$pdo = new PDO($dsn, $user_name, $password);
-} 
-catch (PDOException $e)
-{
-exit;
-}
+$mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
+
 //⑨データベースで使用する文字コードを「UTF8」にする
-header('Content-Type: text/plain; charset=UTF-8', true, 500);
+mysqli_set_charset($mysqli ,"utf8");
 
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 $stock = 0;
@@ -128,6 +118,7 @@ if((isset($_POST['add']))
 	$_SESSION['success']='出荷が完了しました';
 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
 	header("Location:zaiko_ichiran.php");
+	exit;
 	}
 }
 ?>

@@ -23,44 +23,46 @@ $err_msg = "";
  * ②ログインボタンが押されたかを判定する。
  * 押されていた場合はif文の中の処理を行う
  */
-if (isset($_POST['decision']) && $_POST['decision'] == '1') {/* ②の処理を書く */
-
+if (isset($_POST['decision']) && $_POST['decision'] == '1') 
+{
 	 // ③名前とパスワードが両方とも入力されているかを判定する。
 	 //入力されていた場合はif文の中の処理を行う。
-
-	if (!empty($_POST["name"]) && $_POST["pass"]) {/* ③の処理を書く */
+	if (!empty($_POST["name"]) && $_POST["pass"]) 
+	{
 		//④名前とパスワードにPOSTで送られてきた名前とパスワードを設定する
 		$name = $_POST['name'];
 		$password = $_POST['pass'];
 
-	} else {
+	} 
+	else
+	{
 		//⑤名前かパスワードが入力されていない場合は、「名前かパスワードが未入力です」という文言をメッセージを入れる変数に設定する
 		$err_msg = '名前かパスワードが未入力です';
-	
 	}
 }
 
 //⑦名前が入力されているか判定する。入力されていた場合はif文の中に入る
-if (isset($_POST['name'])) {
+if (isset($_POST['name'])) 
+{
 	//⑧名前に「yse」、パスワードに「2021」と設定されているか確認する。設定されていた場合はif文の中に入る
-
-	if( $name == 'yse' && $password == '2021'){/* ⑧の処理を書く */
-
+	if( $name == 'phpbooks' && $password == 'zaiko')
+	{
 		$_SESSION['name']=$name;//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
 		$_SESSION['login'] = true;
-		
 		//⑩在庫一覧画面へ遷移する
-		
-	header("Location:zaiko_ichiran.php");/* ⑩の遷移先を書く */
-	}else{
+		header("Location:zaiko_ichiran.php");
+		exit;
+	}
+	else
+	{
 		//⑪名前もしくはパスワードが間違っていた場合は、「ユーザー名かパスワードが間違っています」という文言をメッセージを入れる変数に設定する
 		$err_msg = 'ユーザ名かパスワードが間違っています';
 	}
 }
 
 //⑫SESSIONの「error2」に値が入っているか判定する。入っていた場合はif文の中に入る
-if (isset($_SESSION['error2']) ){/* ⑫の処理を書く */
-	
+if (isset($_SESSION['error2']) )
+{	
 	$err_msg = $_SESSION['error2'];//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
 	
 	$_SESSION['error2'] = null;//⑭SESSIONの「error2」にnullを入れる。

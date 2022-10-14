@@ -11,7 +11,8 @@
 //①セッションを開始する
 session_start();
 
-function getByid($id,$con){
+function getByid($id,$con)
+{
 	/* 
 	 * ②書籍を取得するSQLを作成する実行する。
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
@@ -23,7 +24,8 @@ function getByid($id,$con){
 	//③実行した結果から1レコード取得し、returnで値を返す。
 }
 
-function updateByid($id,$con,$total){
+function updateByid($id,$con,$total)
+{
 	/*
 	 * ④書籍情報の在庫数を更新するSQLを実行する。
 	 * 引数で受け取った$totalの値で在庫数を上書く。
@@ -34,44 +36,35 @@ function updateByid($id,$con,$total){
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (($_SESSION['login'])!= true){/* ⑤の処理を書く */
+if (($_SESSION['login'])!= true)
+{
 	//⑥SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = "ログインしてください";
 
-//	$pdo = new PDO($dsn, $username, $password, $driver_options);
 	//⑦ログイン画面へ遷移する。
 	header('Location:login.php');
+	exit;
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
-$con  = new mysqli('localhost', 'yse', '2021', 'yse');
-
-
-
-try
-{
-	$pdo = new PDO($dsn, $name, $password);
-	
-}catch (PDOException $test) {
-	exit();
-}
-$pdo = new PDO($dsn, $name, $password);
+$mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
 
 //⑨データベースで使用する文字コードを「UTF8」にする
-$mysqli->set_charset("utf-8");
+mysqli_set_charset($mysqli ,"utf8");
 
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 $book_count = 0;
 
-
 //⑪POSTの「books」から値を取得し、変数に設定する。
-foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
+foreach($_POST['books'] as $book_id)
+{
 	/*
 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
 	 */
-	if (!is_numeric($_POST['stock'][$book_count])) {/* ⑫の処理を書く */
+	if (!is_numeric($_POST['stock'][$book_count])) 
+	{
 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
 		$_SESSION['error']= "数値以外が入力されています";
 
@@ -89,7 +82,8 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 	$book_goukei = $book["stock"] + $_POST['stock'][$book_count];
 
 	//⑱ ⑰の値が100を超えているか判定する。超えていた場合はif文の中に入る。
-	if($book_goukei >= 100){/* ⑱の処理を行う */
+	if($book_goukei >= 100)
+	{
 		//⑲SESSIONの「error」に「最大在庫数を超える数は入力できません」と設定する。
 		$_SESSION['error']= "最大在庫数を超える数は入力できません";
 
@@ -97,9 +91,7 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
 		include('nyuka.php');
 		//㉑「exit」関数で処理を終了する。
 		exit();
-
 	}
-	
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
 	$book_count++;
 }
@@ -108,12 +100,13 @@ foreach($_POST['books'] as $book_id){/* ⑪の処理を書く */
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-if((isset($_POST['add']) == 'ok'){/* ㉓の処理を書く */
+if((isset($_POST['add']) == 'ok')
+{
 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
 	$book_count=0;
-
 	//㉕POSTの「books」から値を取得し、変数に設定する。
-	foreach($_POST['books'] as $book_id){/* ㉕の処理を書く */
+	foreach($_POST['books'] as $book_id)
+	{
 		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
 		$book=getByid($book_id,$pdo);
 
@@ -126,13 +119,10 @@ if((isset($_POST['add']) == 'ok'){/* ㉓の処理を書く */
 		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
 		$book_count++;
 	}
-
 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
 	$_SESSION['success']='入荷が完了しました';
-
 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
 	header("Location:zaiko_ichiran.php");
-	
 }
 ?>
 <!DOCTYPE html>
@@ -163,7 +153,8 @@ if((isset($_POST['add']) == 'ok'){/* ㉓の処理を書く */
 						$book_count = 0;
 
 						//㉝POSTの「books」から値を取得し、変数に設定する。
-						foreach($_POST["books"] as $book_id){/* ㉝の処理を書く */
+						foreach($_POST["books"] as $book_id)
+						{
 							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 							$book=getByid($book_id,$pdo);
 						?>

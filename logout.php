@@ -12,4 +12,5 @@ session_destroy();
 
 //③ログイン画面へ遷移する。
 header('Location:login.php');
+exit;
 ?>

@@ -31,11 +31,10 @@ if (($_SESSION['login'])!=false)
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
-$con  = new mysqli('localhost', 'yse', '2021', 'yse');
+$mysqli  = mysqli_connect('localhost', 'phpbooks', 'zaiko', 'phpbooks');
 
 //⑦データベースで使用する文字コードを「UTF8」にする
-//header('Content-Type: text/plain; charset=UTF-8', true, 500);
-$mysqli->set_charset("utf-8");
+mysqli_set_charset($mysqli ,"utf8");
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(!isset($_POST['books']))
@@ -91,7 +90,7 @@ function getId($id,$con)
 		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
 		 * 設定されていた場合はif文の中に入る。
 		 */ 
-		if(isset($_SESSION['error'])
+		if(isset($_SESSION['error']))
 		{
 			//⑭SESSIONの「error」の中身を表示する。
 			$error = $_SESSION['error'];
